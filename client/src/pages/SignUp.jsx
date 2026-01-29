@@ -21,6 +21,7 @@ export default function SignUp() {
 
     try{
       e.preventDefault();
+      setError(null);
       setLoading(true);
       const res = await fetch('/api/auth/signup', {
         method : 'POST',
@@ -61,7 +62,7 @@ export default function SignUp() {
           <span className='text-blue-700'>Sign In</span>
         </Link>
       </div>
-      {error && <p className='text-red-500 mt-5'>{error}</p>}
+      {error ? <p className='text-red-500 mt-5'>{error}</p> : ''}
       
     </div>
   );

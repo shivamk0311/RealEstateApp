@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
+import { signInStart, signInSuccess, signInFailure, clearError } from '../redux/user/userSlice';
 import OAuth from '../components/OAuth';
 
 export default function SignIn() {
@@ -18,6 +18,10 @@ export default function SignIn() {
     });
   };
   
+  useEffect(() => {
+      dispatch(clearError());
+  }, []);
+
   
   const handleSubmit = async (e) => {
 
@@ -58,8 +62,7 @@ export default function SignIn() {
           <span className='text-blue-700'>Sign Up</span>
         </Link>
       </div>
-      {error && <p className='text-red-500 mt-5'>{error}</p>}
-      
+      {error ? <p className='text-red-500 mt-5'>{error}</p> : ''}
     </div>
   );
 }
