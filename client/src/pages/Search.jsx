@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ListingCard from '../components/ListingCard';
 
 export default function Search() {
 
@@ -43,6 +44,7 @@ export default function Search() {
         setLoading(true);
         const searchQuery = urlParams.toString();
         const res = await fetch(`/api/listing/get?${searchQuery}`);
+        console.log('fetched')
         const data = await res.json();
         setListings(data);
         setLoading(false);
@@ -180,9 +182,22 @@ export default function Search() {
                     className='bg-amber-950 uppercase p-3 text-white hover:opacity-90 rounded-lg'>Search</button>
             </form>
         </div>
-        <div>
+        <div className='flex-1'>
             <h1 
-            className='text-3xl border-b-2 md:min-w-screen border-gray-300 p-3 font-semibold text-amber-900 mt-5'>Listing Results:</h1>
+                className='text-3xl border-b-2 md:min-w-screen border-gray-300 p-3 font-semibold text-amber-900 mt-5'>
+                Listing Results:
+            </h1>
+            <div className='p-3 flex flex-wrap'>
+                {!loading && listings.length === 0 && (
+                    <p className='text-xl text-amber-900 font-semibold'>No Listings Found!</p>
+                )}
+                {loading && (
+                    <p className='text-xl text-amber-900 text-center w-full'>Loading...</p>
+                )}
+                {!loading && listings && listings.map((listing) => (
+                    <ListingCard key={listing._id} listing={listing}/>
+                ))}
+            </div>
         </div>
     </div>
   )
