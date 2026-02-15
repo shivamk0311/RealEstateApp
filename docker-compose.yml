@@ -25,6 +25,7 @@ services:
       context: ./client
       args:
         VITE_API_URL: /api
+        VITE_FIREBASE_API_KEY: AIzaSyC1LXost2evWSlUQwyYnE6_56-df2l2SVM
     ports:
       - "80:80"
     depends_on:
